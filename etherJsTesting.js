@@ -4,11 +4,9 @@ import inquirer from 'inquirer';
 
 dotenv.config();
 
-// 🔗 Configuration du provider Ethereum
 const url = 'https://eth-sepolia.g.alchemy.com/v2/_0wJbZCnKGUqnW41jg6H49L50hAEGlzz';
 const provider = new ethers.JsonRpcProvider(url);
 
-// 🔑 Chargement de la clé privée
 const privateKey = process.env.Private_Key;
 if (!privateKey) {
     console.error('❌ Erreur : Clé privée manquante dans .env');
@@ -16,11 +14,9 @@ if (!privateKey) {
 }
 const signer = new ethers.Wallet(privateKey, provider);
 
-// 🏦 Adresse cible et montant
 const recipientAddress = '0xCb0214aDD202a410d1d8C6F8fd2233676adBE9dA';
 const amountOfEther = ethers.parseUnits('0.001', 'ether');
 
-// 📌 Vérifier l'état d'une transaction
 async function checkTransactionStatus(txHash) {
     const tx = await provider.getTransaction(txHash);
     
@@ -168,11 +164,11 @@ async function estimateGasCost() {
         });
 
         const feeData = await provider.getFeeData();
-        const gasPrice = feeData.gasPrice; // En wei
+        const gasPrice = feeData.gasPrice; 
 
-        const totalCostWei = gasEstimate * gasPrice; // Coût total en wei
-        const totalCostEth = ethers.formatUnits(totalCostWei, 'ether'); // Conversion en ETH
-        const totalCostGwei = ethers.formatUnits(totalCostWei, 'gwei'); // Conversion en Gwei
+        const totalCostWei = gasEstimate * gasPrice; 
+        const totalCostEth = ethers.formatUnits(totalCostWei, 'ether'); 
+        const totalCostGwei = ethers.formatUnits(totalCostWei, 'gwei'); 
 
         console.log(`🔍 Gas Limit Estimé : ${gasEstimate}`);
         console.log(`⛽ Gas Price Actuel : ${ethers.formatUnits(gasPrice, 'gwei')} Gwei`);
@@ -233,5 +229,4 @@ async function main() {
     await main();
 }
 
-// Lancer le script
 main().catch(console.error);
